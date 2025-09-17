@@ -1,0 +1,448 @@
+###
+### SISTEMA DE GESTÃO ESCOLAR - THALES DE TARSIS
+### Coleção de testes para Thunder Client / Insomnia / REST Client
+### Base URL: http://localhost:8000
+###
+
+### ========================================
+### ESTATÍSTICAS
+### ========================================
+
+### Obter estatísticas gerais do sistema
+GET http://localhost:8000/estatisticas HTTP/1.1
+Content-Type: application/json
+
+### ========================================
+### TURMAS - CRUD
+### ========================================
+
+### Listar todas as turmas
+GET http://localhost:8000/turmas HTTP/1.1
+Content-Type: application/json
+
+### Criar nova turma (sucesso)
+POST http://localhost:8000/turmas HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "6º Ano A",
+    "capacidade": 30
+}
+
+### Criar turma com nome inválido (erro 422)
+POST http://localhost:8000/turmas HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "A",
+    "capacidade": 30
+}
+
+### Criar turma com capacidade inválida (erro 422)
+POST http://localhost:8000/turmas HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "7º Ano A",
+    "capacidade": 0
+}
+
+### ========================================
+### ALUNOS - CRUD
+### ========================================
+
+### Listar todos os alunos
+GET http://localhost:8000/alunos HTTP/1.1
+Content-Type: application/json
+
+### Buscar alunos por nome
+GET http://localhost:8000/alunos?search=Ana HTTP/1.1
+Content-Type: application/json
+
+### Filtrar alunos por status
+GET http://localhost:8000/alunos?status=ativo HTTP/1.1
+Content-Type: application/json
+
+### Filtrar alunos por turma (substitua 1 pelo ID real de uma turma)
+GET http://localhost:8000/alunos?turma_id=1 HTTP/1.1
+Content-Type: application/json
+
+### Filtros combinados
+GET http://localhost:8000/alunos?search=Silva&status=ativo&turma_id=1 HTTP/1.1
+Content-Type: application/json
+
+### Criar novo aluno (sucesso)
+POST http://localhost:8000/alunos HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "João da Silva",
+    "data_nascimento": "2010-05-15",
+    "email": "joao.silva@escola.com",
+    "status": "ativo",
+    "turma_id": 1
+}
+
+### Criar aluno sem turma (sucesso)
+POST http://localhost:8000/alunos HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "Maria Santos",
+    "data_nascimento": "2011-08-20",
+    "email": "maria.santos@escola.com",
+    "status": "ativo"
+}
+
+### Criar aluno sem email (sucesso)
+POST http://localhost:8000/alunos HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "Pedro Oliveira",
+    "data_nascimento": "2012-03-10",
+    "status": "inativo",
+    "turma_id": 2
+}
+
+### Criar aluno com nome muito curto (erro 422)
+POST http://localhost:8000/alunos HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "Jo",
+    "data_nascimento": "2010-05-15",
+    "status": "ativo"
+}
+
+### Criar aluno com nome muito longo (erro 422)
+POST http://localhost:8000/alunos HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "Este é um nome extremamente longo que excede os oitenta caracteres permitidos para o campo nome do aluno",
+    "data_nascimento": "2010-05-15",
+    "status": "ativo"
+}
+
+### Criar aluno muito novo (erro 422)
+POST http://localhost:8000/alunos HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "Bebê Silva",
+    "data_nascimento": "2023-01-01",
+    "status": "ativo"
+}
+
+### Criar aluno com email inválido (erro 422)
+POST http://localhost:8000/alunos HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "Carlos Lima",
+    "data_nascimento": "2010-05-15",
+    "email": "email-inválido",
+    "status": "ativo"
+}
+
+### Criar aluno com status inválido (erro 422)
+POST http://localhost:8000/alunos HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "Ana Costa",
+    "data_nascimento": "2010-05-15",
+    "status": "indefinido"
+}
+
+### Criar aluno em turma inexistente (erro 404)
+POST http://localhost:8000/alunos HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "Teste Silva",
+    "data_nascimento": "2010-05-15",
+    "status": "ativo",
+    "turma_id": 999
+}
+
+### Atualizar aluno (substitua 1 pelo ID real de um aluno)
+PUT http://localhost:8000/alunos/1 HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "João da Silva Santos",
+    "data_nascimento": "2010-05-15",
+    "email": "joao.santos@escola.com",
+    "status": "ativo",
+    "turma_id": 2
+}
+
+### Atualizar aluno inexistente (erro 404)
+PUT http://localhost:8000/alunos/999 HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "Aluno Inexistente",
+    "data_nascimento": "2010-05-15",
+    "status": "ativo"
+}
+
+### Atualizar aluno com dados inválidos (erro 422)
+PUT http://localhost:8000/alunos/1 HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "A",
+    "data_nascimento": "2023-01-01",
+    "email": "email-inválido",
+    "status": "status-inválido"
+}
+
+### Excluir aluno (substitua 1 pelo ID real de um aluno)
+DELETE http://localhost:8000/alunos/1 HTTP/1.1
+
+### Excluir aluno inexistente (erro 404)
+DELETE http://localhost:8000/alunos/999 HTTP/1.1
+
+### ========================================
+### MATRÍCULAS
+### ========================================
+
+### Matricular aluno em turma (sucesso)
+POST http://localhost:8000/matriculas HTTP/1.1
+Content-Type: application/json
+
+{
+    "aluno_id": 2,
+    "turma_id": 1
+}
+
+### Matricular aluno inexistente (erro 404)
+POST http://localhost:8000/matriculas HTTP/1.1
+Content-Type: application/json
+
+{
+    "aluno_id": 999,
+    "turma_id": 1
+}
+
+### Matricular em turma inexistente (erro 404)
+POST http://localhost:8000/matriculas HTTP/1.1
+Content-Type: application/json
+
+{
+    "aluno_id": 2,
+    "turma_id": 999
+}
+
+### Tentar matricular em turma cheia (erro 400)
+### Primeiro, crie uma turma com capacidade 1
+POST http://localhost:8000/turmas HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "Turma Teste Capacidade",
+    "capacidade": 1
+}
+
+### Depois matricule um aluno nesta turma
+POST http://localhost:8000/matriculas HTTP/1.1
+Content-Type: application/json
+
+{
+    "aluno_id": 3,
+    "turma_id": 6
+}
+
+### E tente matricular outro aluno na mesma turma (deve dar erro 400)
+POST http://localhost:8000/matriculas HTTP/1.1
+Content-Type: application/json
+
+{
+    "aluno_id": 4,
+    "turma_id": 6
+}
+
+### ========================================
+### TESTES DE PERFORMANCE E STRESS
+### ========================================
+
+### Criar múltiplos alunos em sequência
+POST http://localhost:8000/alunos HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "Aluno Teste 1",
+    "data_nascimento": "2010-01-01",
+    "status": "ativo"
+}
+
+###
+POST http://localhost:8000/alunos HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "Aluno Teste 2",
+    "data_nascimento": "2010-01-02",
+    "status": "ativo"
+}
+
+###
+POST http://localhost:8000/alunos HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "Aluno Teste 3",
+    "data_nascimento": "2010-01-03",
+    "status": "ativo"
+}
+
+### ========================================
+### TESTES DE VALIDAÇÃO DE CAMPOS
+### ========================================
+
+### Teste com campo nome vazio
+POST http://localhost:8000/alunos HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "",
+    "data_nascimento": "2010-05-15",
+    "status": "ativo"
+}
+
+### Teste sem campo obrigatório (nome)
+POST http://localhost:8000/alunos HTTP/1.1
+Content-Type: application/json
+
+{
+    "data_nascimento": "2010-05-15",
+    "status": "ativo"
+}
+
+### Teste sem campo obrigatório (data_nascimento)
+POST http://localhost:8000/alunos HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "Teste Silva",
+    "status": "ativo"
+}
+
+### Teste sem campo obrigatório (status)
+POST http://localhost:8000/alunos HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "Teste Silva",
+    "data_nascimento": "2010-05-15"
+}
+
+### ========================================
+### TESTES DE EDGE CASES
+### ========================================
+
+### Data de nascimento no limite (exatamente 5 anos atrás)
+POST http://localhost:8000/alunos HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "Aluno Limite Idade",
+    "data_nascimento": "2019-12-31",
+    "status": "ativo"
+}
+
+### Email com formato válido mas domínio estranho
+POST http://localhost:8000/alunos HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "Teste Email",
+    "data_nascimento": "2010-05-15",
+    "email": "teste@dominio.muito.longo.exemplo.com.br",
+    "status": "ativo"
+}
+
+### Nome com caracteres especiais
+POST http://localhost:8000/alunos HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "José da Silva-Santos Júnior",
+    "data_nascimento": "2010-05-15",
+    "status": "ativo"
+}
+
+### Nome no limite máximo (80 caracteres)
+POST http://localhost:8000/alunos HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "Este é um nome muito longo mas que ainda está dentro do limite de oitenta char",
+    "data_nascimento": "2010-05-15",
+    "status": "ativo"
+}
+
+### ========================================
+### TESTES DE CONSULTA COM PARÂMETROS
+### ========================================
+
+### Busca case-insensitive
+GET http://localhost:8000/alunos?search=SILVA HTTP/1.1
+Content-Type: application/json
+
+### Busca com espaços
+GET http://localhost:8000/alunos?search=ana%20silva HTTP/1.1
+Content-Type: application/json
+
+### Filtro por status inexistente
+GET http://localhost:8000/alunos?status=pendente HTTP/1.1
+Content-Type: application/json
+
+### Filtro por turma_id inválido
+GET http://localhost:8000/alunos?turma_id=abc HTTP/1.1
+Content-Type: application/json
+
+### ========================================
+### INSTRUÇÕES DE USO
+### ========================================
+
+#
+# Para usar esta coleção:
+#
+# 1. Certifique-se de que o servidor está rodando:
+#    cd backend
+#    uvicorn app:app --reload
+#
+# 2. Execute o seed para ter dados de teste:
+#    cd backend
+#    python seed.py
+#
+# 3. Use Thunder Client (VS Code), Insomnia, ou REST Client
+#    para executar os testes acima
+#
+# 4. Substitua os IDs nos testes (1, 2, etc.) pelos IDs reais
+#    retornados pelas consultas GET
+#
+# 5. Observe os códigos de status HTTP:
+#    - 200: Sucesso (GET, PUT, DELETE)
+#    - 201: Criado (POST)
+#    - 400: Bad Request (dados inválidos, capacidade excedida)
+#    - 404: Not Found (recurso não encontrado)
+#    - 422: Unprocessable Entity (validação falhou)
+#    - 500: Internal Server Error (erro do servidor)
+#
+# 6. Verifique sempre as mensagens de erro no corpo da resposta
+#    para entender o que deu errado
+#
+# ORDEM RECOMENDADA DE EXECUÇÃO:
+# 1. GET /estatisticas (verificar se servidor está funcionando)
+# 2. GET /turmas (listar turmas disponíveis)
+# 3. POST /turmas (criar algumas turmas para teste)
+# 4. GET /alunos (listar alunos existentes)
+# 5. POST /alunos (criar alguns alunos)
+# 6. POST /matriculas (matricular alunos em turmas)
+# 7. Executar testes de erro e edge cases
+#

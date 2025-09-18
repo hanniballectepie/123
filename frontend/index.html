@@ -8,39 +8,190 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Header Fixo -->
-    <header class="header" role="banner">
-        <div class="header-content">
-            <div class="header-left">
-                <h1 class="logo">Gestão Escolar — Thales de Tarsis</h1>
+    <!-- Tela de Login -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-container">
+            <div class="login-header">
+                <h1>Gestão Escolar — Thales de Tarsis</h1>
+                <p>Sistema completo de gestão educacional</p>
             </div>
-            <div class="header-right">
-                <div class="search-box">
-                    <input 
-                        type="text" 
-                        id="searchInput"
-                        placeholder="Buscar aluno..." 
-                        aria-label="Buscar aluno por nome"
-                        class="search-input"
-                    >
-                    <button type="button" class="search-btn" aria-label="Executar busca">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                        </svg>
-                    </button>
-                </div>
-                <button 
-                    type="button" 
-                    class="btn btn-primary" 
-                    id="novoAlunoBtn"
-                    accesskey="n"
-                    title="Novo Aluno (Alt+N)"
-                >
-                    + Novo Aluno
+            
+            <div class="login-tabs">
+                <button type="button" class="tab-btn active" id="loginTab" role="tab" aria-selected="true" aria-controls="login-panel">
+                    Entrar
+                </button>
+                <button type="button" class="tab-btn" id="registerTab" role="tab" aria-selected="false" aria-controls="register-panel">
+                    Registrar
                 </button>
             </div>
+            
+            <!-- Painel de Login -->
+            <div id="login-panel" class="tab-content active" role="tabpanel" aria-labelledby="loginTab">
+                <form id="loginForm" class="auth-form">
+                    <div class="form-group">
+                        <label for="loginUsernameOrEmail">Usuário ou Email</label>
+                        <input 
+                            type="text" 
+                            id="loginUsernameOrEmail" 
+                            name="username_or_email" 
+                            required 
+                            class="form-input"
+                            placeholder="Digite seu usuário ou email"
+                            autocomplete="username"
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="loginPassword">Senha</label>
+                        <input 
+                            type="password" 
+                            id="loginPassword" 
+                            name="password" 
+                            required 
+                            class="form-input"
+                            placeholder="Digite sua senha"
+                            autocomplete="current-password"
+                        >
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary full-width">
+                        Entrar
+                    </button>
+                </form>
+                
+                <div id="loginError" class="error-message" aria-live="assertive" style="display: none;"></div>
+            </div>
+            
+            <!-- Painel de Registro -->
+            <div id="register-panel" class="tab-content" role="tabpanel" aria-labelledby="registerTab" style="display: none;">
+                <form id="registerForm" class="auth-form">
+                    <div class="form-group">
+                        <label for="registerUsername">Usuário *</label>
+                        <input 
+                            type="text" 
+                            id="registerUsername" 
+                            name="username" 
+                            required 
+                            minlength="3"
+                            maxlength="40"
+                            pattern="[a-zA-Z0-9_]+"
+                            class="form-input"
+                            placeholder="Digite seu nome de usuário"
+                            aria-describedby="usernameHelp"
+                            autocomplete="username"
+                        >
+                        <small id="usernameHelp" class="form-help">3-40 caracteres, apenas letras, números e underscore</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="registerEmail">Email *</label>
+                        <input 
+                            type="email" 
+                            id="registerEmail" 
+                            name="email" 
+                            required 
+                            class="form-input"
+                            placeholder="Digite seu email"
+                            autocomplete="email"
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="registerPassword">Senha *</label>
+                        <input 
+                            type="password" 
+                            id="registerPassword" 
+                            name="password" 
+                            required 
+                            minlength="8"
+                            class="form-input"
+                            placeholder="Digite sua senha"
+                            aria-describedby="passwordHelp"
+                            autocomplete="new-password"
+                        >
+                        <small id="passwordHelp" class="form-help">Mínimo 8 caracteres, incluindo maiúscula, minúscula e número</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="registerConfirmPassword">Confirmar Senha *</label>
+                        <input 
+                            type="password" 
+                            id="registerConfirmPassword" 
+                            name="confirm_password" 
+                            required 
+                            class="form-input"
+                            placeholder="Confirme sua senha"
+                            autocomplete="new-password"
+                        >
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary full-width">
+                        Criar Conta
+                    </button>
+                </form>
+                
+                <div id="registerError" class="error-message" aria-live="assertive" style="display: none;"></div>
+            </div>
         </div>
-    </header>
+    </div>
+
+    <!-- App Principal -->
+    <div id="appMain" class="app-main" style="display: none;">
+        <!-- Header Fixo -->
+        <header class="header" role="banner">
+            <div class="header-content">
+                <div class="header-left">
+                    <h1 class="logo">Gestão Escolar — Thales de Tarsis</h1>
+                </div>
+                <div class="header-center">
+                    <div class="search-box">
+                        <input 
+                            type="text" 
+                            id="searchInput"
+                            placeholder="Buscar aluno..." 
+                            aria-label="Buscar aluno por nome"
+                            class="search-input"
+                        >
+                        <button type="button" class="search-btn" aria-label="Executar busca">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button 
+                        type="button" 
+                        class="btn btn-primary" 
+                        id="novoAlunoBtn"
+                        accesskey="n"
+                        title="Novo Aluno (Alt+N)"
+                    >
+                        + Novo Aluno
+                    </button>
+                    
+                    <!-- Menu do usuário -->
+                    <div class="user-menu">
+                        <button type="button" class="user-avatar" id="userMenuBtn" aria-haspopup="true" aria-expanded="false">
+                            <img id="userAvatarImg" src="" alt="Avatar do usuário" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <div class="avatar-fallback" style="display: none;">
+                                <span id="userInitials">U</span>
+                            </div>
+                        </button>
+                        
+                        <div class="user-dropdown" id="userDropdown" style="display: none;">
+                            <div class="user-info">
+                                <span id="userDisplayName">Usuário</span>
+                                <small id="userRole">user</small>
+                            </div>
+                            <hr>
+                            <button type="button" class="dropdown-item" id="perfilBtn">🔧 Perfil</button>
+                            <button type="button" class="dropdown-item" id="logoutBtn">🚪 Sair</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
 
     <!-- Conteúdo Principal -->
     <main class="main-content" role="main">
@@ -211,6 +362,7 @@
             </section>
         </div>
     </main>
+    </div> <!-- Fim do appMain -->
 
     <!-- Modal Novo Aluno -->
     <div id="modalNovoAluno" class="modal" role="dialog" aria-labelledby="modalAlunoTitle" aria-hidden="true">
@@ -369,6 +521,362 @@
                     <button type="submit" class="btn btn-primary">
                         Matricular
                     </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Perfil -->
+    <div id="modalPerfil" class="modal" role="dialog" aria-labelledby="modalPerfilTitle" aria-hidden="true">
+        <div class="modal-backdrop" aria-hidden="true"></div>
+        <div class="modal-content large">
+            <header class="modal-header">
+                <h2 id="modalPerfilTitle">Meu Perfil</h2>
+                <button type="button" class="modal-close" aria-label="Fechar modal">×</button>
+            </header>
+            <div class="modal-body">
+                <div class="perfil-tabs">
+                    <button type="button" class="tab-btn active" id="dadosPerfilTab">Dados Pessoais</button>
+                    <button type="button" class="tab-btn" id="senhaPerfilTab">Alterar Senha</button>
+                    <button type="button" class="tab-btn" id="fotoPerfilTab">Foto de Perfil</button>
+                </div>
+                
+                <!-- Dados Pessoais -->
+                <div id="dadosPerfilPanel" class="tab-content active">
+                    <form id="formDadosPerfil">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="perfilDisplayName">Nome de Exibição</label>
+                                <input type="text" id="perfilDisplayName" name="display_name" class="form-input" maxlength="100">
+                            </div>
+                            <div class="form-group">
+                                <label for="perfilEmail">Email</label>
+                                <input type="email" id="perfilEmail" readonly class="form-input disabled">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="perfilTheme">Tema</label>
+                                <select id="perfilTheme" name="theme_preference" class="form-select">
+                                    <option value="dark">Escuro</option>
+                                    <option value="light">Claro</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="perfilLocale">Idioma</label>
+                                <select id="perfilLocale" name="locale" class="form-select">
+                                    <option value="pt-BR">Português (Brasil)</option>
+                                    <option value="en-US">English (US)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="perfilTimezone">Fuso Horário</label>
+                                <select id="perfilTimezone" name="timezone" class="form-select">
+                                    <option value="America/Sao_Paulo">America/São_Paulo</option>
+                                    <option value="America/New_York">America/New_York</option>
+                                    <option value="Europe/London">Europe/London</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="perfilNotifications" name="notifications_email">
+                                    <label for="perfilNotifications">Receber notificações por email</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Alterar Senha -->
+                <div id="senhaPerfilPanel" class="tab-content" style="display: none;">
+                    <form id="formAlterarSenha">
+                        <div class="form-group">
+                            <label for="senhaAtual">Senha Atual *</label>
+                            <input type="password" id="senhaAtual" name="current_password" required class="form-input" autocomplete="current-password">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="novaSenha">Nova Senha *</label>
+                            <input type="password" id="novaSenha" name="new_password" required minlength="8" class="form-input" autocomplete="new-password" aria-describedby="novaSenhaHelp">
+                            <small id="novaSenhaHelp" class="form-help">Mínimo 8 caracteres, incluindo maiúscula, minúscula e número</small>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Alterar Senha</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Foto de Perfil -->
+                <div id="fotoPerfilPanel" class="tab-content" style="display: none;">
+                    <div class="foto-upload-area">
+                        <div class="current-photo">
+                            <img id="currentProfilePhoto" src="" alt="Foto de perfil atual" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <div class="photo-placeholder" style="display: none;">
+                                <span id="photoInitials">U</span>
+                            </div>
+                        </div>
+                        
+                        <form id="formFotoPerfil" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="fotoPerfilInput">Selecionar Nova Foto</label>
+                                <input type="file" id="fotoPerfilInput" name="file" accept="image/png,image/jpeg,image/jpg" class="form-input">
+                                <small class="form-help">PNG ou JPEG, máximo 2MB</small>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Atualizar Foto</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Detalhes do Aluno -->
+    <div id="modalDetalhesAluno" class="modal" role="dialog" aria-labelledby="modalDetalhesTitle" aria-hidden="true">
+        <div class="modal-backdrop" aria-hidden="true"></div>
+        <div class="modal-content extra-large">
+            <header class="modal-header">
+                <h2 id="modalDetalhesTitle">Detalhes do Aluno</h2>
+                <button type="button" class="modal-close" aria-label="Fechar modal">×</button>
+            </header>
+            <div class="modal-body">
+                <div class="detalhes-tabs">
+                    <button type="button" class="tab-btn active" id="dadosGeraisTab">Dados Gerais</button>
+                    <button type="button" class="tab-btn" id="responsaveisTab">Responsáveis</button>
+                    <button type="button" class="tab-btn" id="notasTab">Notas</button>
+                    <button type="button" class="tab-btn" id="fotoAlunoTab">Foto</button>
+                </div>
+                
+                <!-- Dados Gerais -->
+                <div id="dadosGeraisPanel" class="tab-content active">
+                    <div class="dados-basicos">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Nome:</label>
+                                <span id="detalheNome">-</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Status:</label>
+                                <span id="detalheStatus" class="status-badge">-</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Data de Nascimento:</label>
+                                <span id="detalheDataNascimento">-</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Idade:</label>
+                                <span id="detalheIdade">-</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Email:</label>
+                                <span id="detalheEmail">-</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Turma:</label>
+                                <span id="detalheTurma">-</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Telefone:</label>
+                                <span id="detalheTelefone">-</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Telefone de Emergência:</label>
+                                <span id="detalheTelefoneEmergencia">-</span>
+                            </div>
+                        </div>
+                        
+                        <div class="endereco-section">
+                            <h4>Endereço</h4>
+                            <div id="detalheEndereco" class="endereco-completo">-</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Observações:</label>
+                            <div id="detalheObservacoes" class="observacoes">-</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Responsáveis -->
+                <div id="responsaveisPanel" class="tab-content" style="display: none;">
+                    <div class="panel-actions">
+                        <button type="button" class="btn btn-primary" id="adicionarResponsavelBtn">+ Adicionar Responsável</button>
+                    </div>
+                    
+                    <div id="responsaveisList" class="responsaveis-grid">
+                        <!-- Responsáveis serão carregados via JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Notas -->
+                <div id="notasPanel" class="tab-content" style="display: none;">
+                    <div class="panel-actions">
+                        <button type="button" class="btn btn-primary" id="adicionarNotaBtn">+ Adicionar Nota</button>
+                        <div class="media-info">
+                            <span>Média Geral: <strong id="mediaGeral">-</strong></span>
+                        </div>
+                    </div>
+                    
+                    <div id="notasList" class="notas-table-container">
+                        <table class="notas-table">
+                            <thead>
+                                <tr>
+                                    <th>Disciplina</th>
+                                    <th>Etapa</th>
+                                    <th>Nota</th>
+                                    <th>Data</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="notasTableBody">
+                                <!-- Notas serão carregadas via JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Foto do Aluno -->
+                <div id="fotoAlunoPanel" class="tab-content" style="display: none;">
+                    <div class="foto-upload-area">
+                        <div class="current-photo">
+                            <img id="currentAlunoPhoto" src="" alt="Foto do aluno" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <div class="photo-placeholder" style="display: none;">
+                                <span id="alunoPhotoInitials">A</span>
+                            </div>
+                        </div>
+                        
+                        <form id="formFotoAluno" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="fotoAlunoInput">Selecionar Nova Foto</label>
+                                <input type="file" id="fotoAlunoInput" name="file" accept="image/png,image/jpeg,image/jpg" class="form-input">
+                                <small class="form-help">PNG ou JPEG, máximo 2MB</small>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Atualizar Foto</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Responsável -->
+    <div id="modalResponsavel" class="modal" role="dialog" aria-labelledby="modalResponsavelTitle" aria-hidden="true">
+        <div class="modal-backdrop" aria-hidden="true"></div>
+        <div class="modal-content">
+            <header class="modal-header">
+                <h2 id="modalResponsavelTitle">Adicionar Responsável</h2>
+                <button type="button" class="modal-close" aria-label="Fechar modal">×</button>
+            </header>
+            <form id="formResponsavel" class="modal-body">
+                <div class="form-group">
+                    <label for="responsavelNome">Nome *</label>
+                    <input type="text" id="responsavelNome" name="nome" required minlength="3" maxlength="80" class="form-input">
+                </div>
+                
+                <div class="form-group">
+                    <label for="responsavelParentesco">Parentesco *</label>
+                    <select id="responsavelParentesco" name="parentesco" required class="form-select">
+                        <option value="">Selecione...</option>
+                        <option value="Pai">Pai</option>
+                        <option value="Mãe">Mãe</option>
+                        <option value="Responsável">Responsável</option>
+                        <option value="Tutor">Tutor</option>
+                        <option value="Avô">Avô</option>
+                        <option value="Avó">Avó</option>
+                    </select>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="responsavelTelefone">Telefone</label>
+                        <input type="tel" id="responsavelTelefone" name="telefone" class="form-input" placeholder="(11) 9 9999-9999">
+                    </div>
+                    <div class="form-group">
+                        <label for="responsavelEmail">Email</label>
+                        <input type="email" id="responsavelEmail" name="email" class="form-input">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="responsavelDocumento">CPF</label>
+                    <input type="text" id="responsavelDocumento" name="documento" class="form-input" placeholder="000.000.000-00">
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelarResponsavel">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Nota -->
+    <div id="modalNota" class="modal" role="dialog" aria-labelledby="modalNotaTitle" aria-hidden="true">
+        <div class="modal-backdrop" aria-hidden="true"></div>
+        <div class="modal-content">
+            <header class="modal-header">
+                <h2 id="modalNotaTitle">Adicionar Nota</h2>
+                <button type="button" class="modal-close" aria-label="Fechar modal">×</button>
+            </header>
+            <form id="formNota" class="modal-body">
+                <div class="form-group">
+                    <label for="notaDisciplina">Disciplina *</label>
+                    <input type="text" id="notaDisciplina" name="disciplina" required minlength="2" maxlength="60" class="form-input" list="disciplinasList">
+                    <datalist id="disciplinasList">
+                        <option value="Matemática">
+                        <option value="Português">
+                        <option value="Ciências">
+                        <option value="História">
+                        <option value="Geografia">
+                        <option value="Inglês">
+                        <option value="Educação Física">
+                    </datalist>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="notaEtapa">Etapa *</label>
+                        <select id="notaEtapa" name="etapa" required class="form-select">
+                            <option value="">Selecione...</option>
+                            <option value="1B">1º Bimestre</option>
+                            <option value="2B">2º Bimestre</option>
+                            <option value="3B">3º Bimestre</option>
+                            <option value="4B">4º Bimestre</option>
+                            <option value="FINAL">Nota Final</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="notaNota">Nota *</label>
+                        <input type="number" id="notaNota" name="nota" required min="0" max="10" step="0.1" class="form-input" placeholder="0.0">
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelarNota">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
                 </div>
             </form>
         </div>

@@ -1,51 +1,100 @@
-###
-### SISTEMA DE GESTÃO ESCOLAR - THALES DE TARSIS
-### Coleção de testes para Thunder Client / Insomnia / REST Client
-### Base URL: http://localhost:8000
-###
+### Sistema Escolar - Testes de API
+### Autenticação + Perfil + Dados Detalhados + Notas + Upload de Fotos
 
-### ========================================
-### ESTATÍSTICAS
-### ========================================
+# Variáveis de ambiente
+@baseURL = http://localhost:8000
+@token = {{login_user.response.body.access_token}}
+@adminToken = {{login_admin.response.body.access_token}}
+@userId = {{login_user.response.body.user.id}}
+@alunoId = 1
+@responsavelId = 1
+@notaId = 1
 
-### Obter estatísticas gerais do sistema
-GET http://localhost:8000/estatisticas HTTP/1.1
-Content-Type: application/json
+### === AUTENTICAÇÃO ===
 
-### ========================================
-### TURMAS - CRUD
-### ========================================
-
-### Listar todas as turmas
-GET http://localhost:8000/turmas HTTP/1.1
-Content-Type: application/json
-
-### Criar nova turma (sucesso)
-POST http://localhost:8000/turmas HTTP/1.1
+### 1. Registrar novo usuário
+POST {{baseURL}}/auth/register
 Content-Type: application/json
 
 {
-    "nome": "6º Ano A",
-    "capacidade": 30
+    "username": "professor_teste",
+    "email": "professor@escola.com",
+    "password": "senhaSegura123",
+    "confirm_password": "senhaSegura123"
 }
 
-### Criar turma com nome inválido (erro 422)
-POST http://localhost:8000/turmas HTTP/1.1
+### 2. Login usuário comum
+# @name login_user
+POST {{baseURL}}/auth/login
 Content-Type: application/json
 
 {
-    "nome": "A",
-    "capacidade": 30
+    "username_or_email": "user",
+    "password": "user123"
 }
 
-### Criar turma com capacidade inválida (erro 422)
-POST http://localhost:8000/turmas HTTP/1.1
+### 3. Login administrador
+# @name login_admin
+POST {{baseURL}}/auth/login
 Content-Type: application/json
 
 {
-    "nome": "7º Ano A",
-    "capacidade": 0
+    "username_or_email": "admin",
+    "password": "admin123"
 }
+
+### 4. Obter dados do usuário atual
+GET {{baseURL}}/auth/me
+Authorization: Bearer {{token}}
+
+### 5. Atualizar perfil do usuário
+PUT {{baseURL}}/auth/me
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "display_name": "Professor João Silva",
+    "theme_preference": "dark",
+    "locale": "pt-BR",
+    "timezone": "America/Sao_Paulo",
+    "notifications_email": true
+}
+
+### 6. Alterar senha
+PATCH {{baseURL}}/auth/me/password
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "current_password": "user123",
+    "new_password": "novaSenha123"
+}
+
+### 7. Upload foto de perfil
+POST {{baseURL}}/auth/me/photo
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary
+
+------WebKitFormBoundary
+Content-Disposition: form-data; name="file"; filename="perfil.jpg"
+Content-Type: image/jpeg
+
+< ./test_images/perfil.jpg
+------WebKitFormBoundary--
+
+### === ALUNOS (CRUD Básico) ===
+
+### 8. Listar todos os alunos
+GET {{baseURL}}/alunos
+Authorization: Bearer {{token}}
+
+### 9. Listar alunos com filtros
+GET {{baseURL}}/alunos?search=Ana&turma_id=1&status=ativo
+Authorization: Bearer {{token}}
+
+### 10. Obter aluno específico
+GET {{baseURL}}/alunos/{{alunoId}}
+Authorization: Bearer {{token}}
 
 ### ========================================
 ### ALUNOS - CRUD

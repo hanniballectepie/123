@@ -1,31 +1,59 @@
-# Sistema de Gestão Escolar - Thales de Tarsis
+# 🏫 Sistema de Gestão Escolar - Thales de Tarsis
 
-![Versão](https://img.shields.io/badge/version-1.0.0-orange)
-![Status](https://img.shields.io/badge/status-production-green)
+![Versão](https://img.shields.io/badge/version-2.0.0-orange)
+![Status](https://img.shields.io/badge/status-production-green)  
 ![License](https://img.shields.io/badge/license-MIT-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.104.1-green)
+![JWT](https://img.shields.io/badge/JWT-Authentication-blue)
 
 ## 📖 Resumo do Projeto
 
-Sistema web completo de gestão escolar desenvolvido para demonstrar competências em desenvolvimento full-stack. O sistema possui tema **dark** com paleta de cores inspirada no design moderno, focando em alta acessibilidade e usabilidade.
+Sistema web completo de gestão escolar com **autenticação JWT**, **perfil de usuário**, **dados detalhados de alunos**, **sistema de notas** e **upload de fotos**. Desenvolvido para demonstrar competências em desenvolvimento full-stack com foco em segurança, usabilidade e acessibilidade.
 
 ### 🎯 Funcionalidades Principais
 
-- **CRUD Completo de Alunos**: Cadastro, edição, listagem e exclusão
-- **Gestão de Turmas**: Controle de capacidade e ocupação
-- **Sistema de Matrículas**: Matricular alunos em turmas com validação de capacidade
-- **Filtros Avançados**: Busca por nome, filtro por turma e status
-- **Paginação**: 10 itens por página para melhor performance
-- **Export de Dados**: Exportação em CSV e JSON dos dados filtrados
-- **Estatísticas em Tempo Real**: Dashboard com métricas do sistema
-- **Interface Acessível**: Navegação por teclado, screen readers, contrastes adequados
+#### 🔐 **Sistema de Autenticação Avançado**
+- **Login/Registro Seguro**: JWT com bcrypt, validação de email
+- **Perfil Personalizável**: Display name, tema, timezone, notificações
+- **Upload de Foto**: Fotos de perfil com validação e redimensionamento
+- **Controle de Acesso**: Roles admin/user com permissões diferenciadas
+- **Segurança**: Hash de senhas, tokens com expiração, middleware de auth
 
-### 🎨 Design e Acessibilidade
+#### 👥 **Gestão Completa de Alunos**
+- **Dados Detalhados**: Nome, idade, endereço completo, telefones, email
+- **Upload de Fotos**: Sistema completo de upload com validação
+- **Responsáveis**: Cadastro de múltiplos responsáveis por aluno
+- **Contatos de Emergência**: Telefones e dados de contato essenciais
+- **Status Acadêmico**: Controle de alunos ativos/inativos
+- **Modal Detalhado**: Interface com abas para visualização completa
 
-- **Tema Dark**: Paleta escura profissional com acentos laranjas
-- **Contraste 4.5:1**: Garantindo legibilidade para todos os usuários
-- **Navegação por Teclado**: Suporte completo a atalhos e tab navigation
-- **ARIA Labels**: Semântica correta para tecnologias assistivas
-- **Responsive Design**: Funciona perfeitamente em desktop, tablet e mobile
+#### 📚 **Sistema de Notas Robusto**
+- **Lançamento por Disciplina**: Matemática, Português, História, etc.
+- **Controle por Etapas**: 1º, 2º, 3º, 4º Bimestre + Final
+- **Cálculo de Médias**: Automático com indicadores visuais
+- **Histórico Completo**: Visualização temporal das notas
+- **Validação**: Notas entre 0-10 com validação de entrada
+
+#### 👨‍👩‍👧‍👦 **Gestão de Responsáveis**
+- **Múltiplos Responsáveis**: Pai, mãe, tutor, avô, etc.
+- **Dados Completos**: Nome, parentesco, telefone, email, documento
+- **CRUD Completo**: Criar, editar, visualizar e excluir
+- **Validação de Dados**: CPF, telefones, emails com formatação
+
+#### 📊 **Dashboard e Relatórios**
+- **Estatísticas em Tempo Real**: Contadores dinâmicos
+- **Filtros Avançados**: Por nome, turma, status, período
+- **Paginação Inteligente**: Performance otimizada
+- **Exportação**: CSV e JSON dos dados filtrados
+
+### 🎨 Design e Experiência do Usuário
+
+- **Tema Dark Profissional**: Paleta #ffa31a com acentos elegantes
+- **Interface Intuitiva**: Modais organizados com navegação por abas
+- **Responsivo**: Design mobile-first com breakpoints otimizados
+- **Acessibilidade**: WCAG 2.1 AA, navegação por teclado, screen readers
+- **Toast Notifications**: Feedback visual para todas as ações
+- **Loading States**: Indicadores de carregamento e estados vazios
 
 ## 🚀 Como Executar
 
